@@ -23,135 +23,135 @@ import org.w3c.dom.NodeList;
  * Config 정보 읽는데 성능까지 생각할 필요는 없으므로 구현이 편한 DOM 방식으로.
  */
 public class XmlConfigManager extends ConfigManager {
-	private static Logger logger = LoggerFactory.getLogger(DatabaseMon.class);
-	private static XmlConfigManager configManager = null;
-	
-	private XmlConfigManager(String configFile) {
-		this.configFile = configFile;
-	}
-	
-	/*
-	 * ConfigManager 는 Singleton
-	 */
-	public synchronized static ConfigManager getConfigManager(String configFile) {
-		if(configManager == null) {
-			configManager = new XmlConfigManager(configFile);
-		}
-		return configManager;
-	}
+    private static Logger logger = LoggerFactory.getLogger(DatabaseMon.class);
+    private static XmlConfigManager configManager = null;
 
-	private Document initDocument(String configFile) throws Exception {
-		try( FileInputStream fis = new FileInputStream(configFile)) {
-			
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			
-			Document doc = dBuilder.parse(fis);
-			doc.getDocumentElement().normalize();
-			
-			return doc;
-			
-		} catch(FileNotFoundException e) {
-			logger.error("File not found (" + configFile + ")");
-			throw e;
-		} catch(Exception e) {
-			logger.error("Xml Document parse error.");
-			throw e;
-		}
-	}
+    private XmlConfigManager(String configFile) {
+        this.configFile = configFile;
+    }
 
-	/*
-	 * 주어진 root element 에 설정된 item 들을 Map<String,String>으로 구성하여 리턴한다.
-	 */
-	private Map<String,String> readConfigItemsToMap(Element root) {
-		Map<String,String> map = new HashMap<>(); 
-		
-		NodeList list = root.getChildNodes();
-		
-		for(int i=0; i<list.getLength(); i++) {
-			if(Node.ELEMENT_NODE == list.item(i).getNodeType()) {
-				
-				String key = list.item(i).getNodeName().trim();
-				String value = list.item(i).getTextContent().trim();
-				
-				map.put(key, value);
-			}
-		}
+    /*
+     * ConfigManager 는 Singleton
+     */
+    public synchronized static ConfigManager getConfigManager(String configFile) {
+        if(configManager == null) {
+            configManager = new XmlConfigManager(configFile);
+        }
+        return configManager;
+    }
 
-		return map;
-	}
-	
-	private Element getRootElemByTagName(Element root, String tagName ) {
-		return (Element)root.getElementsByTagName(tagName).item(0);
-	}
-	
-	/*
-	 * @override
-	 * 설정 파일에서 설정을 읽어들여 DBConfig 정보 구축하기
-	 * (ConfigManager.readConfig() 의 구현)
-	 */
-	public void readConfig() throws Exception {
-		try {
-			
-			Document doc = initDocument(configFile);
-			Element root = doc.getDocumentElement();
-			
-			Element commonElem = getRootElemByTagName(root, "common_configs");
-			Element targetDBsElem = getRootElemByTagName(root, "mon_target_dbs");
-			
-			Map<String,String> commonConfig = readConfigItemsToMap(commonElem);
-			
-			NodeList dbList = targetDBsElem.getChildNodes();
-			for(int i=0; i<dbList.getLength(); i++) {
+    private Document initDocument(String configFile) throws Exception {
+        try( FileInputStream fis = new FileInputStream(configFile)) {
 
-				if(dbList.item(i).getNodeType() != Node.ELEMENT_NODE) {
-					continue;
-				}
-				
-				Element oneDB = (Element)dbList.item(i);
-				Map<String,String> connectionConfig = readConfigItemsToMap(oneDB);
-				
-				String dbName = connectionConfig.get("name");
-				String monQueryConfigFile = connectionConfig.get("mon_query_config");
-				
-				List<Map<String,String>> monQueryConfig = new ArrayList<>();
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
-				/*
-				 * DB 마다 query 설정파일을 다르게 설정할 수 있음.
-				 */
-				Document docQuery = initDocument(monQueryConfigFile);
-				Element rootQuery = docQuery.getDocumentElement();
-				
-				NodeList queryList = rootQuery.getChildNodes();
-				
-				for(int j=0; j<queryList.getLength(); j++) {
-					if(queryList.item(j).getNodeType() != Node.ELEMENT_NODE) {
-						continue;
-					}
-					Element oneQuery = (Element)queryList.item(j);
-					Map<String,String> queryMap = readConfigItemsToMap(oneQuery);
-					
-					monQueryConfig.add(queryMap);
-				}
+            Document doc = dBuilder.parse(fis);
+            doc.getDocumentElement().normalize();
 
-				/*
-				 * DB 하나마다 DBConfig 객체 하나씩 구축하여 targetDBs 에 추가한다.
-				 * DBConfig 객체에는 공통정보, DB접속정보, 모니터링 쿼리 정보가 포함된다.
-				 * MonitorThread 가 이 DBConfig 객체 하나씩을 가지고 작업을 수행하게 된다.
-				 * 굳이 DB 하나마다 DBConfig 객체를 생성하지 않고, Config 정보가 바뀌는게 아니므로
-				 * 전체를 static 으로 관리해도 되지만 구현 편의상 그냥 이렇게...;;
-				 */
-				DBConfig dbConfig = new DBConfig();
+            return doc;
 
-				dbConfig.setDBName(dbName);
-				dbConfig.setCommonConfig(commonConfig);
-				dbConfig.setConnectionConfig(connectionConfig);
-				dbConfig.setMonQueryConfig(monQueryConfig);
-				
-				targetDBs.add(dbConfig);
-			}
-		} catch(Exception e) {
-			throw e;
-		}
-	}
+        } catch(FileNotFoundException e) {
+            logger.error("File not found (" + configFile + ")");
+            throw e;
+        } catch(Exception e) {
+            logger.error("Xml Document parse error.");
+            throw e;
+        }
+    }
+
+    /*
+     * 주어진 root element 에 설정된 item 들을 Map<String,String>으로 구성하여 리턴한다.
+     */
+    private Map<String,String> readConfigItemsToMap(Element root) {
+        Map<String,String> map = new HashMap<>(); 
+
+        NodeList list = root.getChildNodes();
+
+        for(int i=0; i<list.getLength(); i++) {
+            if(Node.ELEMENT_NODE == list.item(i).getNodeType()) {
+
+                String key = list.item(i).getNodeName().trim();
+                String value = list.item(i).getTextContent().trim();
+
+                map.put(key, value);
+            }
+        }
+
+        return map;
+    }
+
+    private Element getRootElemByTagName(Element root, String tagName ) {
+        return (Element)root.getElementsByTagName(tagName).item(0);
+    }
+
+    /*
+     * @override
+     * 설정 파일에서 설정을 읽어들여 DBConfig 정보 구축하기
+     * (ConfigManager.readConfig() 의 구현)
+     */
+    public void readConfig() throws Exception {
+        try {
+
+            Document doc = initDocument(configFile);
+            Element root = doc.getDocumentElement();
+
+            Element commonElem = getRootElemByTagName(root, "common_configs");
+            Element targetDBsElem = getRootElemByTagName(root, "mon_target_dbs");
+
+            Map<String,String> commonConfig = readConfigItemsToMap(commonElem);
+
+            NodeList dbList = targetDBsElem.getChildNodes();
+            for(int i=0; i<dbList.getLength(); i++) {
+
+                if(dbList.item(i).getNodeType() != Node.ELEMENT_NODE) {
+                    continue;
+                }
+
+                Element oneDB = (Element)dbList.item(i);
+                Map<String,String> connectionConfig = readConfigItemsToMap(oneDB);
+
+                String dbName = connectionConfig.get("name");
+                String monQueryConfigFile = connectionConfig.get("mon_query_config");
+
+                List<Map<String,String>> monQueryConfig = new ArrayList<>();
+
+                /*
+                 * DB 마다 query 설정파일을 다르게 설정할 수 있음.
+                 */
+                Document docQuery = initDocument(monQueryConfigFile);
+                Element rootQuery = docQuery.getDocumentElement();
+
+                NodeList queryList = rootQuery.getChildNodes();
+
+                for(int j=0; j<queryList.getLength(); j++) {
+                    if(queryList.item(j).getNodeType() != Node.ELEMENT_NODE) {
+                        continue;
+                    }
+                    Element oneQuery = (Element)queryList.item(j);
+                    Map<String,String> queryMap = readConfigItemsToMap(oneQuery);
+
+                    monQueryConfig.add(queryMap);
+                }
+
+                /*
+                 * DB 하나마다 DBConfig 객체 하나씩 구축하여 targetDBs 에 추가한다.
+                 * DBConfig 객체에는 공통정보, DB접속정보, 모니터링 쿼리 정보가 포함된다.
+                 * MonitorThread 가 이 DBConfig 객체 하나씩을 가지고 작업을 수행하게 된다.
+                 * 굳이 DB 하나마다 DBConfig 객체를 생성하지 않고, Config 정보가 바뀌는게 아니므로
+                 * 전체를 static 으로 관리해도 되지만 구현 편의상 그냥 이렇게...;;
+                 */
+                DBConfig dbConfig = new DBConfig();
+
+                dbConfig.setDBName(dbName);
+                dbConfig.setCommonConfig(commonConfig);
+                dbConfig.setConnectionConfig(connectionConfig);
+                dbConfig.setMonQueryConfig(monQueryConfig);
+
+                targetDBs.add(dbConfig);
+            }
+        } catch(Exception e) {
+            throw e;
+        }
+    }
 }
