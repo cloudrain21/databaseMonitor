@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="com.cloudrain21.dbmonitor.XmlConfigManager" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/XmlConfigManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="173" width="309" x="856" y="635"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.cloudrain21.dbmonitor.MysqlDatabaseManager" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/MysqlDatabaseManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="278" x="-441" y="635"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.cloudrain21.dbmonitor.DatabaseManager" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/DatabaseManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="317" width="278" x="36" y="278"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.cloudrain21.dbmonitor.MonitorThread" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/MonitorThread.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="211" x="36" y="119"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.cloudrain21.dbmonitor.DatabaseMon" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/DatabaseMon.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="131" x="531" y="119"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.cloudrain21.dbmonitor.DBConfig" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/DBConfig.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="425" width="303" x="513" y="635"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.cloudrain21.dbmonitor.GoldilocksDatabaseManager" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/GoldilocksDatabaseManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="101" width="278" x="-123" y="635"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.cloudrain21.dbmonitor.OracleDatabaseManager" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/OracleDatabaseManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="101" width="278" x="195" y="635"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.cloudrain21.dbmonitor.ConfigManager" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/ConfigManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="219" x="856" y="278"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.cloudrain21.dbmonitor.JsonConfigManager" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/JsonConfigManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="250" x="1215" y="635"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.cloudrain21.dbmonitor.DatabaseManagerFactory" project="databaseMonitor" 
+    file="/databaseMonitor/src/com/cloudrain21/dbmonitor/DatabaseManagerFactory.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="101" width="283" x="947" y="119"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="12">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="13" name="configManager"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="15">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="16">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <generalization id="17">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="18">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="19" name="targetDBs"/>      
+      <multiplicity id="20" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="21">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="22" name="configManager"/>      
+      <multiplicity id="23" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="25">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="26" name="config"/>      
+      <multiplicity id="27" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="29" name="dbMgr"/>      
+      <multiplicity id="30" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="31">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

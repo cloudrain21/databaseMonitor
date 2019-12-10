@@ -1,0 +1,24 @@
+<monitoring_queries>
+    <query>
+        <name> session_count </name>
+        <mon_enable> on </mon_enable>
+        <display_columns> c2,c1 </display_columns>
+        <alarm_enable> on </alarm_enable>
+        <alarm_chk_column> cnt </alarm_chk_column>
+        <alarm_threshold_val> 100 </alarm_threshold_val>
+        <mon_sql>
+            select * from ttt;
+        </mon_sql>
+    </query>
+    <query>
+        <name> statement_count </name>
+        <mon_enable> yes </mon_enable>
+        <display_columns> Alias_c11,c2 </display_columns>
+        <alarm_enable> on </alarm_enable>
+        <alarm_chk_column> cnt </alarm_chk_column>
+        <alarm_threshold_val> 100 </alarm_threshold_val>
+        <mon_sql>
+            select c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11 as Alias_c11 from ttt;
+        </mon_sql>
+    </query>
+</monitoring_queries>

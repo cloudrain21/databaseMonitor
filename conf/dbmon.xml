@@ -1,0 +1,35 @@
+<!-- comment -->
+
+<database_mon>
+    <common_configs>
+        <log_path> /Users/dplee/work/eclipse-workspace-java/goldilocksMonTool/log </log_path>
+        <file_name> GoldMon.log </file_name>
+        <log_level> warn </log_level>
+        <split_logfile_by_date> 1 </split_logfile_by_date>
+        <split_logfile_by_database> 1 </split_logfile_by_database>
+        <query_interval_sec> 3 </query_interval_sec>
+    </common_configs>
+  
+    <mon_target_dbs>
+        <database>
+            <name> your_db_name1 </name>
+            <driver_name> com.mysql.cj.jdbc.Driver </driver_name>
+            <ip> 127.0.0.1 </ip>
+            <port> 3306 </port>
+            <user> test </user>
+            <pass> test </pass>
+            <conn_opt> serverTimezone=UTC </conn_opt>
+            <mon_query_config> conf/mysql_mon_query.xml </mon_query_config>
+        </database>
+        <database>
+            <name> your_db_name2 </name>
+            <driver_name> com.mysql.cj.jdbc.Driver </driver_name>
+            <ip> 127.0.0.1 </ip>
+            <port> 3333 </port>
+            <user> test </user>
+            <pass> test </pass>
+            <conn_opt> </conn_opt>
+            <mon_query_config> conf/mysql_mon_query.xml </mon_query_config>
+        </database>
+    </mon_target_dbs>
+</database_mon>
