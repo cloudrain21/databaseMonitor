@@ -17,32 +17,40 @@ public class MonitorThread extends Thread {
         long queryIntervalMSec = dbMgr.getDBConfig().getQueryIntervalMSec();
 
         LoggerManager.initialize(dbMgr.getDBName());
+        
+        /*
+         * driver 설정이 잘못된 경우는 main thread 에게 exception 을
+         * 던지고 thread 를 끝낸다.
+         */
+        try {
+            dbMgr.checkDriver();
 
-        while(true) {
-            try {
-                dbMgr.connect();
+            while(true) {
+                try {
+                    dbMgr.connect();
+                } 
+                catch(SQLException e) {
+                    Thread.sleep(10000); 
+                    continue;
+                }
 
                 while(true) {
-                    dbMgr.executeAllQueries();
-
-                    Thread.sleep(queryIntervalMSec);
-                }
-            } catch(SQLException e) {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e1) {
+                    try {
+                        dbMgr.executeAllQueries();
+                        Thread.sleep(queryIntervalMSec);
+                    } 
+                    catch(SQLException e) { break; } 
                 }
 
-                if("08S01".equals(e.getSQLState())) {
-                    continue;
-                } else {
-                    logger.error("critical db error : " + e.getSQLState());
-                }
-            } catch (InterruptedException e) {
-            } catch (Exception e) {
-                logger.error("critical db error" + e.toString());
-                LoggerManager.remove();
+                /*
+                 * 실패 시 reconnect 시도는 10 초마다.
+                 */
+                Thread.sleep(10000); 
             }
+        } catch(InterruptedException e) {
+            logger.error("interrupted from main thread. thread exit...");
+        } catch(Exception e) {
+            logger.error("thread exit..." + e.toString());
         }
     }
 }

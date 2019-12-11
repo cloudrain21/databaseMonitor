@@ -47,16 +47,17 @@ public abstract class DatabaseManager {
     private String getDBPassword() {
         return config.getDatabaseConfig().get("pass");
     }
-
-    public void connect() throws Exception {
-        Map<String,String> dbConfig = config.getDatabaseConfig();
-
+    
+    public void checkDriver() throws ClassNotFoundException {
         try {
             Class.forName(getDriverName());
         } catch(ClassNotFoundException e) {
-            logger.error("Failed to load driver : " + getDriverName());
             throw e;
         }
+    }
+
+    public void connect() throws SQLException {
+        Map<String,String> dbConfig = config.getDatabaseConfig();
 
         try {
             Connection conn = DriverManager.getConnection(
@@ -68,14 +69,13 @@ public abstract class DatabaseManager {
             logger.info("connect success.(" + getDBName() + ")");
 
         } catch(SQLException e) {
-            logger.error("Failed to connect db : " + e.getSQLState());
+            logger.error(e.toString());
             try {
-                if(conn != null) {
-                    conn.close();
-                    conn = null;
+                if(this.conn != null) {
+                    this.conn.close();
+                    this.conn = null;
                 }
             } catch(SQLException ein) {
-                throw ein;
             }
             throw e;
         }
@@ -159,16 +159,13 @@ public abstract class DatabaseManager {
                         dbPrint(queryName, colAliasName, String.valueOf(rs.getTimestamp(i)));
                         break;
                     default :
-                        logger.warn("unsupported colmun type : " + type);
+                        throw new SQLException("unsupported column type : " + type);
                         // need to add other types
                     }
                 }
             }
         } catch(SQLException e) {
             logger.warn(e.getSQLState() + " : " + e);
-            throw e;
-        } catch(Exception e) {
-            logger.error("unexpected exception " + e);
             throw e;
         }
     }
@@ -187,7 +184,7 @@ public abstract class DatabaseManager {
     /*
      * 설정에 등록된 monitoring query 를 모두 실행한다. (enable 된 query 만)
      */
-    public void executeAllQueries() throws Exception {
+    public void executeAllQueries() throws SQLException {
         try {
             for(Map<String,String> queryMap : config.getMonQueryConfig()) {
                 if(isMonEnable(queryMap)) {
@@ -204,7 +201,7 @@ public abstract class DatabaseManager {
                     executeQuery(queryMap.get("name"), queryMap.get("mon_sql"));
                 }
             }
-        } catch(Exception e) {
+        } catch(SQLException e) {
             try {
                 Iterator<String> it = pstmt.keySet().iterator();
                 while(it.hasNext()) {
@@ -216,7 +213,6 @@ public abstract class DatabaseManager {
                 conn.close();
                 conn = null;
             } catch(SQLException e1) {
-                throw e1;
             }
             throw e;
         }

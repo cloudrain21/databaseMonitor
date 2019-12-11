@@ -1,5 +1,6 @@
 package com.cloudrain21.dbmonitor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,6 +10,8 @@ public class DatabaseMon {
     private static Logger logger = LoggerFactory.getLogger(DatabaseMon.class);
     
     public static void main(String[] args) {
+        List<Thread> threadList = new ArrayList<>();
+        
         try {
 
             if(args.length != 1) {
@@ -45,14 +48,42 @@ public class DatabaseMon {
 
                 Thread thread = new MonitorThread(dbMgr);
                 thread.start();
+                
+                threadList.add(thread);
             }
 
             while(true) {
-                Thread.sleep(1000);
+                try {
+                    if(!isAliveAllThread(threadList)) {
+                        logger.error("some threads are not alive. kill and exiting...");
+                        killAllThread(threadList);
+                        break;
+                    }
+                    Thread.sleep(1000);
+                } catch(InterruptedException e) {
+                }
             }
         } catch(Exception e) {
             logger.error(e.toString());
             LoggerManager.remove();
+        }
+    }
+    
+    private static boolean isAliveAllThread(List<Thread> threadList) {
+        boolean alive = true;
+        
+        for(Thread thread : threadList) {
+            if(!thread.isAlive()) {
+                alive = false;
+                break;
+            }
+        }
+        return alive;
+    }
+    
+    private static void killAllThread(List<Thread> threadList) {
+        for(Thread thread : threadList) {
+            thread.interrupt();
         }
     }
     

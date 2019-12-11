@@ -10,8 +10,6 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,7 +21,6 @@ import org.w3c.dom.NodeList;
  * Config 정보 읽는데 성능까지 생각할 필요는 없으므로 구현이 편한 DOM 방식으로.
  */
 public class XmlConfigManager extends ConfigManager {
-    private static Logger logger = LoggerFactory.getLogger(DatabaseMon.class);
     private static XmlConfigManager configManager = null;
 
     private XmlConfigManager(String configFile) {
@@ -52,10 +49,8 @@ public class XmlConfigManager extends ConfigManager {
             return doc;
 
         } catch(FileNotFoundException e) {
-            logger.error("File not found (" + configFile + ")");
             throw e;
         } catch(Exception e) {
-            logger.error("Xml Document parse error.");
             throw e;
         }
     }

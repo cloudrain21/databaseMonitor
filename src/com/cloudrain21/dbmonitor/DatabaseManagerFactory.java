@@ -31,7 +31,6 @@ public class DatabaseManagerFactory {
                 throw new ClassNotFoundException(driverName);
             }
         } catch(ClassNotFoundException e) {
-            System.out.println("driverName(" + driverName + ") is invalid");
             throw e;
         }
     }

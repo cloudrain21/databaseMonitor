@@ -41,11 +41,11 @@
 		</sift>
 	</appender>
 
-	<logger name="com.cloudrain21.dbmonitor.DatabaseMon" level="debug" additivity="false">
+	<logger name="com.cloudrain21.dbmonitor.DatabaseMon" level="warn" additivity="false">
 		<appender-ref ref="FILE-THREAD" />
 	</logger>
  
-    <root level="info">
+    <root level="warn">
         <appender-ref ref="STDOUT" />
     </root>
 

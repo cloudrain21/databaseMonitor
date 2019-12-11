@@ -2,11 +2,6 @@
 
 <database_mon>
     <common_configs>
-        <log_path> /Users/dplee/work/eclipse-workspace-java/goldilocksMonTool/log </log_path>
-        <file_name> GoldMon.log </file_name>
-        <log_level> warn </log_level>
-        <split_logfile_by_date> 1 </split_logfile_by_date>
-        <split_logfile_by_database> 1 </split_logfile_by_database>
         <query_interval_sec> 3 </query_interval_sec>
     </common_configs>
   
