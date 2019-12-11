@@ -3,10 +3,10 @@ package com.cloudrain21.dbmonitor;
 import java.util.Map;
 
 /*
- * Goldilocks DB 관련 작업을 수행하는 Manager Class 
+ * Altibase DB 관련 작업을 수행하는 Manager Class 
  */
-public class GoldilocksDatabaseManager extends DatabaseManager {
-    public GoldilocksDatabaseManager() {}
+public class AltibaseDatabaseManager extends DatabaseManager {
+    public AltibaseDatabaseManager() {}
 
     /*
      * @Override
@@ -23,11 +23,11 @@ public class GoldilocksDatabaseManager extends DatabaseManager {
         }
 
         StringBuffer url = new StringBuffer();
-        url.append("jdbc:goldilocks://");
+        url.append("jdbc:Altibase://");
         url.append(ip);
         url.append(":");
         url.append(port);
-        url.append("/test");
+        url.append("/mydb");
         url.append(conn_opt);
 
         return url.toString();

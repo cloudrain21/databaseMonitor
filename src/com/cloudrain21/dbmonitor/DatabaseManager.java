@@ -54,7 +54,7 @@ public abstract class DatabaseManager {
         try {
             Class.forName(getDriverName());
         } catch(ClassNotFoundException e) {
-            logger.error("(" + getDBName() + ")" + " Failed to load driver : " + getDriverName());
+            logger.error("Failed to load driver : " + getDriverName());
             throw e;
         }
 
@@ -68,7 +68,7 @@ public abstract class DatabaseManager {
             logger.info("connect success.(" + getDBName() + ")");
 
         } catch(SQLException e) {
-            logger.error("(" + getDBName() + ")" + " Failed to connect db : " + e.getSQLState());
+            logger.error("Failed to connect db : " + e.getSQLState());
             try {
                 if(conn != null) {
                     conn.close();
@@ -94,8 +94,8 @@ public abstract class DatabaseManager {
         return false;
     }
 
-    private synchronized void dbPrint(String content) {
-        logger.info("[ " + getDBName() + " ]" + content);
+    private synchronized void dbPrint(String queryName, String colAliasName, String value) {
+        logger.info("[ " + queryName + " ]" + colAliasName + " : " + value);
     }
 
     private void executeQuery(String queryName, String query) throws SQLException {
@@ -124,39 +124,39 @@ public abstract class DatabaseManager {
                     case Types.VARCHAR:
                     case Types.LONGVARCHAR:
                     case Types.LONGNVARCHAR:
-                        dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getString(i));
+                        dbPrint(queryName, colAliasName, rs.getString(i));
                         break;
                     case Types.BIGINT:
                     case Types.INTEGER:
                     case Types.TINYINT:
                     case Types.SMALLINT:
-                        dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getInt(i));
+                        dbPrint(queryName, colAliasName, String.valueOf(rs.getInt(i)));
                         break;
                     case Types.DECIMAL:
                     case Types.NUMERIC:
                         if(rsmd.getScale(i) > 0) {
-                            dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getDouble(i));
+                            dbPrint(queryName, colAliasName, String.valueOf(rs.getDouble(i)));
                         } else {
-                            dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getInt(i));
+                            dbPrint(queryName, colAliasName, String.valueOf(rs.getInt(i)));
                         }
                         break;
                     case Types.REAL:
                     case Types.DOUBLE:
-                        dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getDouble(i));
+                        dbPrint(queryName, colAliasName, String.valueOf(rs.getDouble(i)));
                         break;
                     case Types.FLOAT:
-                        dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getFloat(i));
+                        dbPrint(queryName, colAliasName, String.valueOf(rs.getFloat(i)));
                         break;
                     case Types.DATE:
-                        dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getDate(i));
+                        dbPrint(queryName, colAliasName, String.valueOf(rs.getDate(i)));
                         break;
                     case Types.TIME:
                     case Types.TIME_WITH_TIMEZONE:
-                        dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getTime(i));
+                        dbPrint(queryName, colAliasName, String.valueOf(rs.getTime(i)));
                         break;
                     case Types.TIMESTAMP:
                     case Types.TIMESTAMP_WITH_TIMEZONE:
-                        dbPrint(" [ " + queryName + " ]" + colAliasName + " : " + rs.getTimestamp(i));
+                        dbPrint(queryName, colAliasName, String.valueOf(rs.getTimestamp(i)));
                         break;
                     default :
                         logger.warn("unsupported colmun type : " + type);
@@ -165,10 +165,10 @@ public abstract class DatabaseManager {
                 }
             }
         } catch(SQLException e) {
-            dbPrint("(" + getDBName() + ")(" + e.getSQLState() + ") " + e);
+            logger.warn(e.getSQLState() + " : " + e);
             throw e;
         } catch(Exception e) {
-            logger.error("=====> unexpected exception " + e);
+            logger.error("unexpected exception " + e);
             throw e;
         }
     }

@@ -8,6 +8,9 @@ import java.util.Map;
 public class OracleDatabaseManager extends DatabaseManager {
     public OracleDatabaseManager() {}
 
+    /*
+     * @Override
+     */
     public String makeConnectionUrl(Map<String,String> dbConfig) {
         String conn_opt = "";
 
@@ -20,11 +23,11 @@ public class OracleDatabaseManager extends DatabaseManager {
         }
 
         StringBuffer url = new StringBuffer();
-        url.append("jdbc:mysql://");
+        url.append("jdbc:oracle:thin:@");
         url.append(ip);
         url.append(":");
         url.append(port);
-        url.append("/test");
+        url.append(":xe");
         url.append(conn_opt);
 
         return url.toString();

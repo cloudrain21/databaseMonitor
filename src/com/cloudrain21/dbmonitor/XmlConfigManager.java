@@ -86,7 +86,7 @@ public class XmlConfigManager extends ConfigManager {
     }
 
     /*
-     * @override
+     * @Override
      * 설정 파일에서 설정을 읽어들여 DBConfig 정보 구축하기
      * (ConfigManager.readConfig() 의 구현)
      */

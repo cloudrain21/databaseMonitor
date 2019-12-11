@@ -16,6 +16,8 @@ public class MonitorThread extends Thread {
     public synchronized void run() {
         long queryIntervalMSec = dbMgr.getDBConfig().getQueryIntervalMSec();
 
+        LoggerManager.initialize(dbMgr.getDBName());
+
         while(true) {
             try {
                 dbMgr.connect();
@@ -34,15 +36,12 @@ public class MonitorThread extends Thread {
                 if("08S01".equals(e.getSQLState())) {
                     continue;
                 } else {
-                    logger.error("(" + dbMgr.getDBName() + ")" + " critical db error : " + e.getSQLState());
+                    logger.error("critical db error : " + e.getSQLState());
                 }
             } catch (InterruptedException e) {
             } catch (Exception e) {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e1) {
-                }
-                logger.error("(" + dbMgr.getDBName() + ")" + " critical db error" + e.toString());
+                logger.error("critical db error" + e.toString());
+                LoggerManager.remove();
             }
         }
     }

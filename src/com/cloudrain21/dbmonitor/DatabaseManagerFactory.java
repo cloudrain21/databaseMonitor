@@ -18,6 +18,14 @@ public class DatabaseManagerFactory {
             {
                 return new GoldilocksDatabaseManager();
             } 
+            else if(driverName.equals("Altibase.jdbc.driver.AltibaseDriver")) 
+            {
+                return new AltibaseDatabaseManager();
+            } 
+            else if(driverName.equals("FakeDatabaseDriverForTest")) 
+            {
+                return new FakeDatabaseManager();
+            }
             else 
             {
                 throw new ClassNotFoundException(driverName);
