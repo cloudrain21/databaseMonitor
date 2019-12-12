@@ -38,8 +38,9 @@ public class MonitorThread extends Thread {
                     try {
                         dbMgr.executeAllQueries();
                         Thread.sleep(queryIntervalMSec);
+                    } catch(SQLException e) { 
+                        break; 
                     } 
-                    catch(SQLException e) { break; } 
                 }
 
                 /*

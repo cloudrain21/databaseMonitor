@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Rsrc-Class-Path: ./ mysql-connector-java-8.0.18.jar logback-classic-1.
- 2.3.jar logback-core-1.2.3.jar slf4j-api-1.7.29.jar
-Class-Path: .
-Created-By: 1.8.0_51 (Oracle Corporation)
-Main-Class: com.cloudrain21.dbmonitor.DatabaseMon
-

@@ -81,6 +81,9 @@ public abstract class DatabaseManager {
         }
     }
 
+    /*
+     * 비교할 때마다 이렇게 하는게 아주 비효율적이긴 하지만, 모니터링 프로그램이니까 pass.
+     */
     private boolean isDisplayColumn(String queryName, String colName, String colAliasName) {
         Map<String,String> queryMap = config.getMonQueryMapByName(queryName);
         String displayCols = queryMap.get("display_columns");
@@ -106,17 +109,20 @@ public abstract class DatabaseManager {
             ResultSet rs = pstmt.get(query).executeQuery();
 
             ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsCount = rsmd.getColumnCount();
+            int columnCount = rsmd.getColumnCount();
+            
+            logger.info("[ {} ]", queryName.toUpperCase());
+            StringBuffer result = new StringBuffer("  ");
 
             while(rs.next())
             {
-                for(int i=1; i<=columnsCount; i++) {
+                for(int i=1; i<=columnCount; i++) {
                     colName = rsmd.getColumnName(i).toLowerCase();
                     colAliasName = rsmd.getColumnLabel(i).toLowerCase();
 
-                    if(! isDisplayColumn(queryName, colName, colAliasName)) {
-                        continue;
-                    }
+//                    if(! isDisplayColumn(queryName, colName, colAliasName)) {
+//                        continue;
+//                    }
 
                     int type = rsmd.getColumnType(i);
                     switch(type) {
@@ -124,45 +130,49 @@ public abstract class DatabaseManager {
                     case Types.VARCHAR:
                     case Types.LONGVARCHAR:
                     case Types.LONGNVARCHAR:
-                        dbPrint(queryName, colAliasName, rs.getString(i));
+                        result.append(rs.getString(i));
                         break;
                     case Types.BIGINT:
                     case Types.INTEGER:
                     case Types.TINYINT:
                     case Types.SMALLINT:
-                        dbPrint(queryName, colAliasName, String.valueOf(rs.getInt(i)));
+                        result.append(String.valueOf(rs.getInt(i)));
                         break;
                     case Types.DECIMAL:
                     case Types.NUMERIC:
                         if(rsmd.getScale(i) > 0) {
-                            dbPrint(queryName, colAliasName, String.valueOf(rs.getDouble(i)));
+                            result.append(String.valueOf(rs.getDouble(i)));
                         } else {
-                            dbPrint(queryName, colAliasName, String.valueOf(rs.getInt(i)));
+                            result.append(String.valueOf(rs.getInt(i)));
                         }
                         break;
                     case Types.REAL:
                     case Types.DOUBLE:
-                        dbPrint(queryName, colAliasName, String.valueOf(rs.getDouble(i)));
+                        result.append(String.valueOf(rs.getDouble(i)));
                         break;
                     case Types.FLOAT:
-                        dbPrint(queryName, colAliasName, String.valueOf(rs.getFloat(i)));
+                        result.append(String.valueOf(rs.getFloat(i)));
                         break;
                     case Types.DATE:
-                        dbPrint(queryName, colAliasName, String.valueOf(rs.getDate(i)));
+                        result.append(String.valueOf(rs.getDate(i)));
                         break;
                     case Types.TIME:
                     case Types.TIME_WITH_TIMEZONE:
-                        dbPrint(queryName, colAliasName, String.valueOf(rs.getTime(i)));
+                        result.append(String.valueOf(rs.getTime(i)));
                         break;
                     case Types.TIMESTAMP:
                     case Types.TIMESTAMP_WITH_TIMEZONE:
-                        dbPrint(queryName, colAliasName, String.valueOf(rs.getTimestamp(i)));
+                        result.append(String.valueOf(rs.getTimestamp(i)));
                         break;
                     default :
                         throw new SQLException("unsupported column type : " + type);
-                        // need to add other types
+                        // TODO : need to add other types
+                    }
+                    if(i<columnCount) {
+                        result.append(" , ");
                     }
                 }
+                logger.info(result.toString());
             }
         } catch(SQLException e) {
             logger.warn(e.getSQLState() + " : " + e);
