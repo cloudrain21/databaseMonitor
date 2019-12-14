@@ -24,12 +24,11 @@ public class MonitorThread extends Thread {
          */
         try {
             System.out.println("check driver.... : " + dbMgr.getDBName());
-            dbMgr.checkDriver();
+//            dbMgr.checkDriver();
             System.out.println("check driver end....");
 
             while(true) {
                 try {
-                    System.out.println("call db connect....");
                     dbMgr.connect();
                 } 
                 catch(SQLException e) {
@@ -39,7 +38,6 @@ public class MonitorThread extends Thread {
 
                 while(true) {
                     try {
-                        System.out.println("call executeQueries....");
                         dbMgr.executeAllQueries();
                         Thread.sleep(queryIntervalMSec);
                     } catch(SQLException e) { 
@@ -53,10 +51,8 @@ public class MonitorThread extends Thread {
                 Thread.sleep(10000); 
             }
         } catch(InterruptedException e) {
-            System.out.println("interrupt thread exit...");
             logger.error("interrupted from main thread. thread exit...");
         } catch(Exception e) {
-            System.out.println("thread exit...");
             logger.error("thread exit..." + e.toString());
         }
     }

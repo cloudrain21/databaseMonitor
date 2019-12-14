@@ -7,15 +7,27 @@
   
     <mon_target_dbs>
         <database>
+            <name> postgres </name>
+            <driver_name> org.postgresql.Driver </driver_name>
+            <ip> 127.0.0.1 </ip>
+            <port> 5432 </port>
+            <user> test </user>
+            <pass> test </pass>
+            <conn_opt> </conn_opt>
+            <mon_query_config> conf/postgres_mon_query.xml </mon_query_config>
+        </database>
+
+        <database>
             <name> mysql </name>
             <driver_name> com.mysql.cj.jdbc.Driver </driver_name>
             <ip> 127.0.0.1 </ip>
-            <port> 3306 </port>
+            <port> 3333 </port>
             <user> test </user>
             <pass> test </pass>
             <conn_opt> serverTimezone=UTC </conn_opt>
             <mon_query_config> conf/mysql_mon_query.xml </mon_query_config>
         </database>
+
         <database>
             <name> goldilocks </name>
             <driver_name> sunje.goldilocks.jdbc.GoldilocksDriver </driver_name>

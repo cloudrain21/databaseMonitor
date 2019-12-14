@@ -22,6 +22,10 @@ public class DatabaseManagerFactory {
             {
                 return new AltibaseDatabaseManager();
             } 
+            else if(driverName.equals("org.postgresql.Driver")) 
+            {   
+                return new PostgresqlDatabaseManager();
+            }
             else if(driverName.equals("FakeDatabaseDriverForTest")) 
             {
                 return new FakeDatabaseManager();
