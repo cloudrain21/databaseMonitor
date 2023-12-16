@@ -59,15 +59,12 @@ public class DBConfig {
     }
 
     public Map<String,String> getMonQueryMapByName(String queryName) {
-        Map<String,String> retQueryMap = null;
-
         for(Map<String,String> queryMap : monQueryConfig) {
             if(queryMap.get("name").equals(queryName)) {
-                retQueryMap = queryMap;
-                break;
+                return queryMap;
             }
         }
-        return retQueryMap;
+        return null;
     }
 
     private void showCommonConfig() {

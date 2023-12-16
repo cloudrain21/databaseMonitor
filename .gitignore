@@ -1,2 +1,4 @@
 /DatabaseMonitor.jar
 bin/**/*.class
+.idea/
+/bin/
